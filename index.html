@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <style>
+        /* General Body Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f8ff; /* Light blue background */
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4a90e2;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px #d3d3d3;
+        }
+
+        /* Task List Styles */
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .task {
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-size: 1.2em;
+            transition: background-color 0.3s ease, transform 0.2s;
+        }
+
+        /* Incomplete tasks - Vibrant background */
+        .task.incomplete {
+            background-color: #ff6f61; /* Bright coral */
+            color: #fff;
+            transform: scale(1);
+        }
+
+        /* Completed tasks - Calming background */
+        .task.completed {
+            background-color: #7bdcb5; /* Bright green */
+            color: white;
+            text-decoration: line-through;
+            transform: scale(1);
+        }
+
+        /* Hover effect for tasks */
+        .task:hover {
+            transform: scale(1.05);
+        }
+
+        /* Button Styling */
+        .complete-button {
+            background-color: #ffdd57;
+            color: #333;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .complete-button:hover {
+            background-color: #ffc107; /* Golden yellow */
+        }
+
+        .add-task-form input {
+            padding: 10px;
+            border: 2px solid #4a90e2;
+            border-radius: 5px;
+            font-size: 1em;
+            width: 70%;
+            margin-right: 10px;
+        }
+
+        .add-task-form button {
+            background-color: #4a90e2; /* Vibrant blue */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .add-task-form button:hover {
+            background-color: #357ABD; /* Slightly darker blue on hover */
+        }
+
+        .add-task-form {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+
+    <h1>To-Do List</h1>
+
+    <ul>
+        {% for task in tasks %}
+            <li class="task {% if task.completed %}completed{% else %}incomplete{% endif %}">
+                {{ task.title }}
+                {% if not task.completed %}
+                    <button class="complete-button" onclick="location.href='{{ url_for('complete_task_route', task_index=loop.index0) }}'">
+                        Complete
+                    </button>
+                {% else %}
+                    <span>✓ Completed</span>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <form method="POST" action="{{ url_for('add_task_route') }}" class="add-task-form">
+        <input type="text" name="title" placeholder="New task" required>
+        <button type="submit">Add Task</button>
+    </form>
+{% endblock %}
