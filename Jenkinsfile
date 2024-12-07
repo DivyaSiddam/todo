@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-   # For Windows Command Prompt
-=======
 pipeline {
     agent any 
     stages {
@@ -24,4 +21,3 @@ pipeline {
         }
     }
 }
->>>>>>> 2d99514ea9cab304370893a66d4c5321fbdc7b1e
